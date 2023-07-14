@@ -1,0 +1,44 @@
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+       <li class="breadcrumb-item"><a routerLink="../dashboard">Dashboard</a></li>
+       <li class="breadcrumb-item active" aria-current="page">Listes des événements</li>
+    </ol>
+  </nav>
+  <div class="mb-2">
+    <input type="text" placeholder="nom,lieu..." [(ngModel)]="searchText" class="form-control mt-4">
+  </div>
+  <div class="row">
+    <div class="col-md-12 stretch-card">
+       <div class="card">
+          <div class="card-body">
+             <div class="table-responsive " >
+                <table   class="table-hover table border-dark" style="width: 100%;">
+                   <thead>
+                      <tr>
+                         <th>Nom d'événement</th>
+                         <th>Lieu</th>
+                         <th>type</th>
+                         <th>theme</th>
+                         <th>Date d'événement</th>
+                         <th>Action</th>
+                      </tr>
+                   </thead>
+                   <tbody>
+                      <tr *ngFor="let event of filterEvents()">
+                         <td class="text-dark" ><a target="_blank" routerLink="../../event/{{event.idEvent}}"> {{event.nom}}</a> </td>
+                         <td>{{event.lieu}}</td>
+                         <td>{{event.typeEvent}}</td>
+                         <td>{{event.themeEvent}}</td>
+                         <td>{{event.date | date: 'dd/MM/yyyy'}}</td>
+                        <td><button type="button" class="btn btn-danger rounded-3  btn-sm" style="margin-right:5px" (click)="deleteEvent(event.idEvent)"><i class="mdi mdi-delete"></i></button>
+                            <span><a class="btn btn-primary rounded-3 btn-sm" style="margin-right:5px" target="_blank" routerLink="../../event/{{event.idEvent}}">  <i class="mdi mdi-eye"></i></a> </span>  
+                            <span><a class="btn btn-light border border-1 border-dark rounded-3 btn-sm"   routerLink="../evenement/modifier/{{event.idEvent}}">  <i class="mdi mdi-pen"></i></a> </span>  
+                         </td>
+                      </tr>
+                   </tbody>
+                </table>
+             </div>
+          </div>
+       </div>
+    </div>
+  </div>

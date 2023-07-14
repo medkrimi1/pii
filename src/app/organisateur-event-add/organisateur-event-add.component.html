@@ -1,0 +1,82 @@
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Compte</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Ajouter événement</li>
+    </ol>
+  </nav>
+  
+
+         
+  
+          <form class="forms-sample" (submit)="AddEvent()" [formGroup]="validationForm" >
+            <div class="mb-3">
+              <label for="exampleInputUsername1" class="form-label">Nom d'événement</label>
+              <input type="text" class="form-control" id="nom" name="nom"  formControlName="nom" autocomplete="off" [(ngModel)]="event.nom"  placeholder="Nom d'événement"
+              [ngClass]="{'is-invalid': isFormSubmitted && form.nom.errors}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputUsername1" class="form-label">lieu</label>
+                <input type="text" class="form-control" id="lieu" name="lieu"  formControlName="lieu"  [(ngModel)]="event.lieu" placeholder="lieu"
+                [ngClass]="{'is-invalid': isFormSubmitted && form.lieu.errors}" required>
+              </div>
+
+              
+
+
+              <div class="mb-3">
+                <label for="exampleInputUsername1" class="form-label">Date</label>
+                <input type="date" class="form-control" id="date" name="date"  formControlName="date"  [(ngModel)]="event.date" placeholder="Date"
+                [ngClass]="{'is-invalid': isFormSubmitted && form.lieu.errors}" >
+              </div>
+          
+
+             
+
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Type</label>
+                <select type="" class="form-select" name="typeEvent" [(ngModel)]="event.typeEvent" formControlName="typeEvent"
+                [ngClass]="{'is-invalid': isFormSubmitted && form.typeEvent.errors}"  required>
+                <option value="Presentiel">Presentiel</option>
+                <option value="Hybride">Hybride</option>
+                <option value="Virtuel">Virtuel</option>
+                </select>
+             </div>
+
+             <div class="mb-3" *ngIf="event.typeEvent === 'Virtuel' || event.typeEvent==='Hybride'">
+                <label for="lienAcces" class="form-label">lien Accés</label>
+                <input type="text" class="form-control" name="lienAcces" [(ngModel)]="event.lienAcces" formControlName="lienAcces">
+              </div>
+
+
+
+             <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Théme</label>
+                <select type="" class="form-select" name="themeEvent" [(ngModel)]="event.themeEvent" formControlName="themeEvent"
+                [ngClass]="{'is-invalid': isFormSubmitted && form.themeEvent.errors}"  required>
+                <option value="Sportif">Sportif</option>
+                <option value="Culturel">Culturel</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Culinaire">Culinaire</option>
+                <option value="It">It</option>
+                </select>
+             </div>
+
+
+              <div class="mb-3">
+                <label for="exampleInputUsername1" class="form-label">description</label>
+                <textarea class="form-control" id="description" name="description" rows="5" formControlName="description"  [(ngModel)]="event.description" placeholder="description"
+                [ngClass]="{'is-invalid': isFormSubmitted && form.description.errors}" required>
+               </textarea>
+                </div>
+
+
+
+
+           
+            <button type="submit" class="btn btn-primary me-2 mt-4" [disabled]="isFormValid" >Ajouter événement</button>
+         
+          </form>
+  
+       

@@ -1,0 +1,271 @@
+<ng-template #content let-modal>
+   <div class="modal-header">
+     <h4 class="modal-title">Les details du dossier sponsoring de l'événement: {{event.nom}}</h4>
+     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+   </div>
+   <div class="modal-body">
+     <table class="table table-bordered">
+       <thead>
+       <tr>
+         <th colspan="2">Description du dossier</th>
+         <td colspan="2">{{ dossier.description }}</td>
+       </tr>
+       <tr>
+         <th colspan="2">Le public cible</th>
+         <td colspan="2">{{ dossier.publicCible }}</td>
+       </tr>
+       <tr>
+         <th colspan="2">Le plan de Visibilité</th>
+         <td colspan="2">{{ dossier.planVisibilite }}</td>
+       </tr>
+       <tr>
+         <th colspan="2">Option de Partenariat</th>
+         <td colspan="2">{{ dossier.optionsPartenariat }}</td>
+       </tr>
+       <tr>
+         <th colspan="2">Contact et Coordonnées</th>
+         <td colspan="2">{{ dossier.contactCoordonnees }}</td>
+       </tr>
+       </thead>
+       <tbody>
+       <tr>
+         <td colspan="4" class="pack-header bg-light">Les packs disponibles</td>
+       </tr>
+       <tr>
+         <td colspan="4">
+           <!-- Utilisez une boucle *ngFor pour afficher chaque pack -->
+           <div *ngFor="let pack of dossier.pack_list" class="pack-item">
+             <div class="pack-description">
+               <strong>Description:</strong> {{ pack.descritpion }}
+             </div>
+             <div>
+               <strong>Type de pack:</strong> {{ pack.typePack }}
+             </div>
+             <div>
+               <strong>ID du pack:</strong> {{ pack.idPack }}
+             </div>
+             <br>
+           </div>
+         </td>
+       </tr>
+       </tbody>
+     </table>
+   </div>
+ 
+   <div class="modal-footer">
+     <button type="button" class="btn btn-success" (click)="closeAndOpenModal(modal2)">Créer une offre sponsoring</button>
+   </div>
+ </ng-template>
+ 
+ 
+ <ng-template #modal2 let-modal2>
+   <div class="modal-header">
+     <h4 class="modal-title">Creation d'un offre pour le dossier: {{dossier.description}}</h4>
+     <button type="button" class="btn-close" aria-label="Close" (click)="modal2.dismiss('Cross click')"></button>
+   </div>
+   <div class="modal-body">
+     <form  #ngForm="ngForm">
+ 
+       <div class="mb-3">
+         <label for="packSelect" class="form-label">Sélectionner un pack</label>
+         <select class="form-select" id="packSelect" name="idPack" ngModel required>
+           <option value="">Sélectionner un pack</option>
+           <option *ngFor="let pack of dossier.pack_list" [value]="pack.idPack">{{ pack.typePack}}</option>
+         </select>
+       </div>
+ 
+       <div class="form-group">
+         <label for="description">Decrivez l'offre qui vous convient</label>
+         <textarea ngModel class="form-control" id="description" name="description" aria-describedby="emailHelp" placeholder="Enter description"></textarea>
+       </div>
+ 
+       <div class="form-group">
+         <label for="adresse">Decrivez votre adresse</label>
+         <input ngModel class="form-control" id="adresseSponsor" name="adresseSponsor" aria-describedby="emailHelp" placeholder="Enter adresse">
+       </div>
+ 
+       <div class="form-group">
+         <label for="prix">Montant</label>
+         <textarea ngModel class="form-control" id="prix" name="prix" aria-describedby="emailHelp" placeholder="Enter montant"></textarea>
+       </div>
+ 
+ 
+       <!--      <div class="form-group">-->
+       <!--        <label for="exampleInputPassword1">Password</label>-->
+       <!--        <input ngModel type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">-->
+       <!--      </div>-->
+     </form>
+   </div>
+   <div class="modal-footer">
+     <button type="submit" class="btn btn-success" (click)="create(ngForm.value)">Créer offre</button>
+   </div>
+ </ng-template>
+ 
+ 
+
+
+<app-global-header></app-global-header>
+<div class="cover" stye>
+   <h1 class="title ">{{event.nom}}</h1>
+ 
+
+</div>
+
+<div class="card border-3 border-dark">
+    <div class="container" style="display: flex;
+    align-items: center;">
+        <nav class="page-breadcrumb  m-2 " style="margin-left: 30px!important; ">
+          <ol class="breadcrumb bg-white m-2">
+            <li class="breadcrumb-item"><a href="/evenements">événements</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{event.nom}}</li>
+          </ol>
+        </nav>
+     
+        <button *ngIf="!currentUser " class="btn btn-primary ml-auto" routerLink="/connexion">Participer maintenant</button> 
+ 
+        <button *ngIf="!participated && currentUser.role == 'PARTICIPANT'" class="btn btn-primary ml-auto" (click)="openVerticalCenteredModal(verticalCenteredModal)">Participer maintenant</button>
+
+        <button *ngIf="currentUser && participated" class="btn btn-success ml-auto" >Participé</button></div>
+
+
+  
+<!-- Modal -->
+<ng-template #verticalCenteredModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Confirmation de participation</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <p>Voulez vous vraiment participer a cette événement ?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Annuler</button>
+    <button type="button" class="btn btn-primary" (click)="addParticipation()">Confirmer</button>
+  </div>
+</ng-template>
+      
+  
+</div>
+
+<div class="container">
+ 
+   <div class="row profile-body m-3">
+    
+      <div class="col-md-8 col-xl-8 middle-wrapper">
+         <div class="row">
+            <div class="col-md-12 ">
+               <div class="card rounded border-1 border-dark">
+                  <div class="card-header">
+                     <h3>Description</h3>
+                  </div>
+                  <div class="card-body">
+                     <p class="mb-3 tx-14">{{event.description}}</p>
+                  </div>
+               </div>
+            </div>
+            
+
+          
+         </div>
+
+         <div class="col-md-12 my-4" *ngIf="dossier.description">
+            <div class="card rounded border-1 border-dark">
+              <div class="card-header">
+                <h3>Devenir un sponsor pour cet évenement</h3>
+              </div>
+              <div class="card-body">
+                <button class="btn btn-outline-primary mb-2 me-2" (click)="openLg(content)">Voir dossier sponsoring</button>
+  
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="d-none d-xl-block col-xl-4">
+        
+         <div class="card rounded mb-2 border-1 border-dark mb-3">
+            <div class="card-body text-center">
+               <div class="mt-3">
+                  <label class="card-title fw-bolder mb-0 text-uppercase">Lieu d'événement</label>
+                  <p class="text-muted">{{event.lieu}}</p>
+               </div>
+               <hr>
+               <div class="mt-3">
+                  <label class="card-title fw-bolder mb-0 text-uppercase">Type</label>
+                  <p class="text-muted">{{event.typeEvent}}</p>
+               </div>
+               <hr>
+               <div class="mt-3">
+                  <label class="card-title fw-bolder mb-0 text-uppercase">Théme:</label>
+                  <p class="text-muted">{{event.themeEvent}}</p>
+               </div>
+               <hr>
+               <div class="mt-3 mb-2">
+                  <label class="card-title fw-bolder mb-0 text-uppercase">Date d'événement:</label>
+                  <p class="text-muted">{{event.date | date: 'dd/MM/yyyy'}}</p>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-12 grid-margin">
+               <div class="card rounded border-1 border-dark">
+                  <div class="card-body text-center">
+                     <h6 class="card-title">photos</h6>
+                     <div class="row ms-0 me-0">
+                        <hr>
+                        <a href="" (click)="false" class="col-md-4 ps-1 pe-1">
+                           <figure class="mb-2">
+                              <img class="img-fluid rounded" src="https://via.placeholder.com/67x67" alt="">
+                           </figure>
+                        </a>
+                        <a href="" (click)="false" class="col-md-4 ps-1 pe-1">
+                           <figure class="mb-2">
+                              <img class="img-fluid rounded" src="https://via.placeholder.com/67x67" alt="">
+                           </figure>
+                        </a>
+                        <a href="" (click)="false" class="col-md-4 ps-1 pe-1">
+                           <figure class="mb-2">
+                              <img class="img-fluid rounded" src="https://via.placeholder.com/67x67" alt="">
+                           </figure>
+                        </a>
+                        <a href="" (click)="false" class="col-md-4 ps-1 pe-1">
+                           <figure class="mb-2">
+                              <img class="img-fluid rounded" src="https://via.placeholder.com/67x67" alt="">
+                           </figure>
+                        </a>
+                        <a href="" (click)="false" class="col-md-4 ps-1 pe-1">
+                           <figure class="mb-2">
+                              <img class="img-fluid rounded" src="https://via.placeholder.com/67x67" alt="">
+                           </figure>
+                        </a>
+                        <a href="" (click)="false" class="col-md-4 ps-1 pe-1">
+                           <figure class="mb-2">
+                              <img class="img-fluid rounded" src="https://via.placeholder.com/67x67" alt="">
+                           </figure>
+                        </a>
+                        <a href="" (click)="false" class="col-md-4 ps-1 pe-1">
+                           <figure class="mb-0">
+                              <img class="img-fluid rounded" src="https://via.placeholder.com/67x67" alt="">
+                           </figure>
+                        </a>
+                        <a href="" (click)="false" class="col-md-4 ps-1 pe-1">
+                           <figure class="mb-0">
+                              <img class="img-fluid rounded" src="https://via.placeholder.com/67x67" alt="">
+                           </figure>
+                        </a>
+                        <a href="" (click)="false" class="col-md-4 ps-1 pe-1">
+                           <figure class="mb-0">
+                              <img class="img-fluid rounded" src="https://via.placeholder.com/67x67" alt="">
+                           </figure>
+                        </a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+<app-global-footer></app-global-footer>

@@ -1,0 +1,83 @@
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="../dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Listes des logistiques</li>
+    </ol>
+  </nav>
+
+  <div> 
+    <button class="btn btn-primary rounded-pill float-end mb-2 btn-sm" (click)="openVerticalCenteredModal(verticalCenteredModal)">Ajouter logistique +</button>
+  </div>
+
+  <ng-template #verticalCenteredModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Ajouter Logistique</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <form  (submit)="AddLogistique()" [formGroup]="validationForm" >
+    <div class="modal-body">
+       
+            <div class="mb-3">
+                <label  class="form-label">description</label>
+                <input type="text" class="form-control" id="description" [(ngModel)]="logistique.description" formControlName="description" 
+                [ngClass]="{'is-invalid': isFormSubmitted && form.description.errors}"  placeholder="description" required>
+             </div>
+
+             <div class="mb-3">
+                <label class="form-label">evenement</label>
+                <select class="form-control" formControlName="evenement" [(ngModel)]="selectedEventId">
+                  <option value="">-- Select evenement --</option>
+                  <option *ngFor="let event of eventss" [value]="event.idEvent">{{ event.nom }}</option>
+                </select>
+              </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Annuler</button>
+      <button type="button" class="btn btn-primary" type="submit">Ajouter</button>
+    </div>
+      </form>
+  </ng-template>
+
+
+ 
+  <div class="mb-4">
+    <input type="text" placeholder="description" [(ngModel)]="searchText" class="form-control mt-4">
+  </div>
+  <div class="row">
+    <div class="col-md-12 stretch-card">
+      <div class="card">
+        <div class="card-body">
+          
+          <div class="table-responsive " >
+            <table   class="table-hover table border-dark" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th style="width: 500px;">description</th>
+                  <th>Nom d'événement</th>
+                  <th>Action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let logistique of filterLogistiques() ">
+                
+                  <td>{{logistique.idLogistique}}</td>
+                 
+                  <td>{{logistique.description}}  </td>
+
+                  <td ><a target="_blank" href="../../../event/{{logistique.evenement.idEvent}}">{{logistique.evenement.nom}}</a> </td>
+                  
+               <td><button type="button" class="btn btn-danger rounded-3  btn-sm" style="margin-right:5px" (click)="deleteLogistique(logistique.idLogistique)"><i class="mdi mdi-delete"></i></button>
+               </td>
+               </tr>
+
+              </tbody>
+             
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

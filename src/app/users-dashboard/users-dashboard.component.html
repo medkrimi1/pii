@@ -1,0 +1,73 @@
+
+<app-global-header></app-global-header>
+<div class="card mb-3 bg-primary">
+    <div class="card-body mt-3"></div>
+</div>
+<div class="container ">
+
+    <div class="row"><div class="col-lg-3" >
+
+        <div class="card border-2 border-dark" >
+    
+            <div class="card-body">
+                <div class="d-flex flex-column align-items-center border-bottom px-10 py-3" #avatar>
+                    <div class="mb-3">
+                      <img class="wd-80 ht-80 rounded-circle" src="../assets/images/user.jpg" alt="">
+                    </div>
+                    <div class="text-center">
+                        <h3 class=" nav-link fw-bolder" style="font-size: 20px;">{{currentUser.nom}} {{currentUser.prenom}}</h3>
+                        <p class="tx-12 text-muted mt-1">{{currentUser.role}}</p>
+                      <button class="rounded-pill btn btn-outline-primary btn-sm m-2" routerLink="/profil/{{currentUser.id}}" >Voir profil</button>
+                     
+                    </div>
+                  </div>
+                  <div *ngIf="currentUser.role == 'FOURNISSEUR'"  class="text-primary fw-bolder side-bar"><a routerLink="offreList" >Mes Offres</a>   <hr></div>
+                
+                  <div *ngIf="currentUser.role == 'PARTICIPANT'"  class="text-primary fw-bolder side-bar"><a routerLink="participations" >Mes abonnements</a>   <hr></div>
+                  <div  *ngIf="currentUser.role == 'ORGANISATEUR'"  class="text-primary fw-bolder side-bar"><a routerLink="evenement" >Ajouter événement</a>
+                    <hr>
+                </div>
+                  <div  *ngIf="currentUser.role == 'ORGANISATEUR'"  class="text-primary fw-bolder side-bar"><a routerLink="evenements" >Mes événements</a>
+                    <hr>
+                 </div>
+
+                 <div  *ngIf="currentUser.role == 'ORGANISATEUR'"  class="text-primary fw-bolder side-bar"><a routerLink="logistique" >Mes logistiques</a>
+                    <hr>
+                 </div>
+                
+                  <div class="text-primary fw-bolder side-bar"><a routerLink="/mon-compte" >Paramétres</a> </div>
+               
+                  <hr>
+                  <div class="text-dark fw-bolder side-bar"><a class="text-dark" (click)="onLogout()" >Déconnexion</a> </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="col-lg-9">
+    <div class="card border-2 border-dark">
+    <div class="card-body ">
+        <router-outlet></router-outlet>
+    </div>
+    
+    
+    </div>
+    
+    
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

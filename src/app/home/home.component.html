@@ -1,0 +1,149 @@
+<app-global-header></app-global-header>
+
+
+<ngb-carousel *ngIf="images" class="carousel-fade" [showNavigationArrows]="true" [showNavigationIndicators]="true">
+    <ng-template ngbSlide *ngFor="let image of images">
+        <div class="picsum-img-wrapper">
+            <img [src]="image" class="d-block w-100" alt="Random slide" style="height: 500px; object-fit: cover;">
+        </div>
+        <div class="carousel-caption">
+            <h1>Bienvenue</h1>
+            <p>Some description text.</p>
+        </div>
+    </ng-template>
+</ngb-carousel>
+<div class="container" id="evenements">
+    <div class="text-center m-4">
+        <h2 class="fw-bolder" #Events>Listes des événements</h2>
+    </div>
+    <div class="bg-white p-4 border border-1 border-dark rounded-3">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div *ngFor="let event of events.slice(0, 6)" class="col">
+                <div class="card text-center  bg-light">
+                    <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title" type="button" routerLink="/event/{{event.idEvent}}">{{event.nom}}</h5>
+                        <p class="card-text">{{event.lieu}} </p>
+                        <button routerLink="/event/{{event.idEvent}}" class="btn btn-primary mt-3">Consulter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div *ngIf="events.length > 6" class="col text-center mt-4">
+        <button class="btn btn-primary" routerLink="/evenements">Voir Plus</button>
+    </div>
+
+    <hr>
+
+    <div class="py-24 bg-white border border-1 border-dark rounded-3">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h3
+                    class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
+                    Nos <span class="text-indigo-600">logistiques</span>
+                </h3>
+
+
+                <p class="mt-4 max-w-2xl text-lg leading-7 text-gray-500 lg:mx-auto font-regular">
+                    Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis
+                    in accusamus quisquam.
+                </p>
+            </div>
+            <div class="row mt-3">
+
+                <div *ngFor="let logistique of logistiques">
+                    <div class="card border border-1 border-dark mb-3">
+                        <div class="card-body">
+                           
+
+                            <div>
+                                
+                                <h5>{{logistique.description}}</h5>
+
+                                <span class="float-end">
+                                    <button class="btn btn-outline-primary rounded-pill" routerLink="/mon-compte/offreList" >Ajouter Offre</button>
+                                 </span>
+                            </div>
+                           
+
+                           
+                             
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+
+<section id="#Contact" class="contact_us" #Contact>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="contact_inner">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="contact_form_inner">
+                                <div class="contact_field">
+                                    <h3>Contactez-nous</h3>
+                                    <p>N'hésitez pas à nous contacter à tout moment. Nous vous répondrons dès que
+                                        possible !.</p>
+                                    <input type="text" class="form-control form-group" placeholder="Name" />
+                                    <input type="text" class="form-control form-group" placeholder="Email" />
+                                    <textarea class="form-control form-group" placeholder="Message"></textarea>
+                                    <button class="btn btn-primary w-100 ">Envoyer</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="right_conatct_social_icon d-flex align-items-end">
+                                <div class="socil_item_inner d-flex">
+                                    <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact_info_sec bg-primary text-white">
+                        <h4>Contact Info</h4>
+                        <div class="d-flex info_single align-items-center">
+                            <i class="fas fa-headset"></i>
+                            <span>+216 12345678</span>
+                        </div>
+                        <div class="d-flex info_single align-items-center">
+                            <i class="fas fa-envelope-open-text"></i>
+                            <span>info@contact.com</span>
+                        </div>
+                        <div class="d-flex info_single align-items-center">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>123 Rue principale 1234, tunis, tunisie</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+<app-global-footer></app-global-footer>

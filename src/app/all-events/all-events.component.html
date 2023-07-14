@@ -1,0 +1,88 @@
+<app-global-header></app-global-header>
+
+<div class="cover">
+  <h1 class="title">événements</h1>
+</div>
+
+<div class="card border-3 border-dark">
+  <div class="container" style="display: flex; align-items: center;">
+    <nav class="page-breadcrumb m-2" style="margin-left: 30px!important;">
+      <ol class="breadcrumb bg-white m-2">
+        <li class="breadcrumb-item"><a href="/">Acceuil</a></li>
+        <li class="breadcrumb-item active" aria-current="page">événements</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row profile-body m-3">
+    <div class="d-none d-xl-block col-lg-3">
+      <div class="row">
+        <div class="col-md-12 grid-margin">
+          <div class="card rounded border-1 border-dark">
+            <div class="card-body text-center">
+              <h6 class="card-title">Recherche</h6>
+              <form (submit)="onSubmit()">
+                <div class="row ms-0 me-0">
+
+                    <div class="my-2">
+                        <label for="nomFilter">Nom:</label>
+                        <input type="text" id="nomFilter" class="form-control" placeholder="Nom d'événement" [(ngModel)]="nomFilter" name="nomFilter">
+                      </div>
+                      <div class="my-2">
+                        <label for="lieuFilter">Lieu:</label>
+                        <input type="text" id="lieuFilter" class="form-control" placeholder="Lieu d'événement" [(ngModel)]="lieuFilter" name="lieuFilter">
+                      </div>
+
+
+                      <div class="my-2">
+                    <label for="eventType">Type d'événement:</label>
+                    <select id="eventType" class="form-select" [(ngModel)]="eventTypeFilter" name="eventType">
+                      <option value="">Tous</option>
+                      <option value="Presentiel">Présentiel</option>
+                      <option value="Hybride">Hybride</option>
+                      <option value="Virtuel">Virtuel</option>
+                    </select>
+                  </div>
+                  <div class="my-2">
+                    <label for="eventTheme">Thème:</label>
+                    <select id="eventTheme" class="form-select" [(ngModel)]="eventThemeFilter" name="eventTheme">
+                      <option value="">Tous</option>
+                      <option value="Sportif">Sportif</option>
+                      <option value="Culturel">Culturel</option>
+                      <option value="Gaming">Gaming</option>
+                      <option value="Fashion">Fashion</option>
+                      <option value="It">IT</option>
+                      <option value="Culinaire">Culinaire</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row ms-0 me-0 mt-3">
+               
+                </div>
+                <button type="submit" class="btn btn-primary ">Rechercher</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9 col-xl-9 middle-wrapper">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div *ngFor="let event of filteredEvents" class="col">
+          <div class="card text-center border-1 border-dark">
+            <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title" type="button" routerLink="/event/{{event.idEvent}}">{{event.nom}}</h5>
+              <p class="card-text">{{event.lieu}} </p>
+              <button routerLink="/event/{{event.idEvent}}" class="btn btn-primary mt-3">Consulter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-global-footer></app-global-footer>

@@ -1,0 +1,46 @@
+
+
+<div class="row w-100 mx-0 mt-7 auth-page">
+    <div class="col-md-8 col-xl-6 mx-auto">
+      <div class="card">
+        <div class="row">
+          <div class="col-md-4 pe-md-0">
+            <div class="auth-side-wrapper" [ngStyle]="{ 'background-image': 'url(../assets/images/login.jpg)' }">
+  
+            </div>
+          </div>
+          <div class="col-md-8 ps-md-0">
+            <div class="auth-form-wrapper px-4 py-5">
+              <a routerLink="/" class="nobleui-logo d-block mb-2">Gestion<span>UI</span></a>
+              <h5 class="text-muted fw-normal mb-4">Bienvenue de retour ! Connectez-vous à votre compte..</h5>
+              
+             
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Adresse E-mail</label>
+                  <input type="email" [(ngModel)]="email" class="form-control" id="exampleInputEmail1" placeholder="Adresse E-mail" >
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Mot de Passe</label>
+                  <input type="password" [(ngModel)]="password" name="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password" placeholder="Mot de Passe" >
+                </div>
+                <div class="form-check mb-3">
+                  <input type="checkbox" class="form-check-input" id="authCheck">
+                  <label class="form-check-label" for="authCheck">
+                    Souvenez-vous de moi
+                  </label>
+                </div>
+                <div *ngIf="alert" class=" text-danger mb-3">{{ alert }}</div>
+                <div>
+                   
+                  <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="login()">Se connecter</button>
+                
+                </div>
+                
+                <a routerLink="/inscription" class="d-block mt-3 text-muted">Pas encore inscrit ? Inscrivez-vous</a>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,73 @@
+<div class="container ">
+  <div  class=" navbar navbar-expand-lg text-white" style="position: absolute; border:none; background-color: transparent; padding-right:100px;padding-left:100px; width:100%;left:0px" >
+     <a class="navbar-brand text-white m-5" routerLink="."> <a routerLink="/" class="sidebar-brand nobleui-logo text-white">
+     Gestion<span>UI</span>
+     </a></a>
+     <!-- Toggle the value of the property when the toggler button is clicked. -->
+     <button class="navbar-toggler" type="button" (click)="isBasicExampleMenuCollapsed = !isBasicExampleMenuCollapsed">
+     &#9776;
+     </button>
+     <!-- Add the ngbCollapse directive to the element below. -->
+     <div [ngbCollapse]="isBasicExampleMenuCollapsed"  class="collapse navbar-collapse ">
+        <ul class="navbar-nav me-auto text-white">
+           <li class="nav-item  m-5">
+              <!-- Close the menu when a link is clicked. -->
+              <a class="nav-link" routerLink="/evenements" >événements</a>
+           </li>
+           <li class="nav-item m-5">
+              <a class="nav-link" routerLink="." (click)="scrollToServices()">Services</a>
+           </li>
+
+           <li class="nav-item m-5">
+            <a class="nav-link" routerLink="." (click)="scrollToServices()">Contact</a>
+         </li>
+        </ul>
+     
+
+        <div class="nav-item nav-profile"  *ngIf="currentUser" ngbDropdown style="padding:0px;margin:0px">
+         
+            <img type="button" class="wd-30 ht-30 rounded-circle" style="margin-right: 22px;" ngbDropdownToggle  src="../assets/images/user.jpg" alt="profile">
+        
+          <div ngbDropdownMenu class="px-0  border-2 border-dark " aria-labelledby="profileDropdown"style="left:-60px" >
+            <div class=" d-flex flex-column align-items-center border-bottom px-5 py-3">
+              <div class="mb-3">
+                <img class="wd-80 ht-80 rounded-circle" src="../assets/images/user.jpg" alt="">
+              </div>
+              <div class="text-center">
+                <p class="tx-16 fw-bolder">{{currentUser.nom}} {{currentUser.prenom}}</p>
+                <p class="tx-12 text-muted">{{currentUser.email}}</p>
+              </div>
+            </div>
+            <ul class="list-unstyled p-1">
+              <li class="dropdown-item py-2">
+
+                  
+                <a *ngIf="currentUser.role == 'ADMIN'" 
+                routerLink="/compte/admin/parametres"  class="d-flex text-body ms-0">
+                  <i class="feather icon-user me-2 icon-md"></i>
+                  <span>Profil</span>
+                </a>
+                <a *ngIf="currentUser.role != 'ADMIN'" 
+                routerLink="/mon-compte"  class="d-flex text-body ms-0">
+                  <i class="feather icon-user me-2 icon-md"></i>
+                  <span>Profil</span>
+                </a>
+              </li>
+              <hr style="margin:0">
+            
+       
+              <li class="dropdown-item py-2">
+                <a href="" (click)="onLogout()" class="d-flex text-body ms-0">
+                  <i class="feather icon-log-out me-2 icon-md"></i>
+                  <span>Déconnexion</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+      </div>
+
+      <div *ngIf="!currentUser"><a class="btn btn-primary rounded-pill my-2 my-sm-0" routerLink="/connexion" >Connexion</a></div>
+     
+     </div>
+  </div>
+</div>

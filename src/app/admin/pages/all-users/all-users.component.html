@@ -1,0 +1,110 @@
+<nav class="page-breadcrumb">
+   <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="../dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">utilisateurs ({{ filteredUsersCount }})</li>
+   </ol>
+ </nav>
+ <div class="row">
+   <div class="col-md-12 stretch-card">
+      <div class="card">
+         <div class="card-body">
+            <div class="card-title">utilisateurs<span class="float-end"><button  (click)="AddUser(verticalCenteredModal)" class="btn btn-primary rounded-pill btn-sm" >Ajouter utilisateur + </button></span> </div>
+            <div class="mb-4">
+               <input type="text" placeholder="Filter users..." [(ngModel)]="filterText" class="form-control mt-4">
+            </div>
+        
+           
+ 
+            <div class="table-responsive mt-4" >
+               <table   class="table-hover table border-dark" style="width: 100%;">
+                  <thead>
+                     <tr>
+                       <th></th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Role</th>
+                        <th>email</th>
+                 
+                        <th>Action</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let user of filteredUsers">
+                       <td><img _ngcontent-xfi-c98="" src="assets/images/user.jpg" alt="image"></td>
+                        <td> {{ user.nom }}</td>
+                        <td>{{ user.prenom }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>{{ user.email }}</td>
+                        <td><button type="button" class="btn btn-danger rounded-3  btn-sm" style="margin-right:5px" (click)="deleteUser(user.id)"><i class="mdi mdi-delete"></i></button>
+                           <span><a class="btn btn-primary rounded-3 btn-sm" target="_blank" routerLink="../../../profil/{{user.id}}">  <i class="mdi mdi-eye"></i></a> </span>  
+                        </td>
+                     </tr>
+                  </tbody>
+                
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
+ </div>
+ 
+ 
+ <ng-template #verticalCenteredModal let-modal>
+   <div class="modal-header">
+     <h5 class="modal-title" id="exampleModalLabel">Ajouter utilisateur</h5>
+     <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+   </div>
+   <div class="modal-body">
+     <form class="forms-sample" (submit)="onRegister($event)" [formGroup]="validationForm">
+       <div class="row">
+          <div class="col-lg-6">
+             <div class="mb-3">
+                <label for="exampleInputUsername1" class="form-label">Nom</label>
+                <input type="text" class="form-control" id="nom" formControlName="nom" 
+                [ngClass]="{'is-invalid': isFormSubmitted && form.nom.errors}" [(ngModel)]="user.nom" placeholder="Nom" required>
+             </div>
+          </div>
+          <div class="col-lg-6">
+             <div class="mb-3">
+                <label for="exampleInputUsername1" class="form-label">Prénom</label>
+                <input type="text" class="form-control" id="prenom" formControlName="prenom" 
+                [ngClass]="{'is-invalid': isFormSubmitted && form.prenom.errors}" [(ngModel)]="user.prenom" placeholder="Prénom" required>
+             </div>
+          </div>
+       </div>
+       <div class="mb-3">
+          <label for="exampleInputUsername1" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" formControlName="email" 
+          [ngClass]="{'is-invalid': isFormSubmitted && form.email.errors}" [(ngModel)]="user.email" placeholder="Email" required>
+       </div>
+       <div *ngIf="emailExistsError" class="text-danger mb-3">{{ emailExistsError }}</div>
+       <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" pattern="^.{6,20}$"  formControlName="password"   
+             [ngClass]="{'is-invalid': isFormSubmitted && form.password.errors}" name="password"  placeholder="Password" placeholder="entre 6 et 20 Caractères" required>
+       </div>
+       <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Role</label>
+          <select type="" class="form-select" name="role" [(ngModel)]="user.role" formControlName="role"
+          [ngClass]="{'is-invalid': isFormSubmitted && form.role.errors}"  >
+          <option value="ADMIN">ADMIN</option>
+          <option value="ORGANISATEUR">ORGANISATEUR</option>
+          <option value="PARTICIPANT">PARTICIPANT</option>
+          <option value="SPONSOR">SPONSOR</option>
+          <option value="STAFF">STAFF</option>
+          </select>
+       </div>
+       <div class="text-success mb-2" *ngIf="successMessage" >
+          <p>{{ successMessage }}</p>
+          <p>Redirecting to login page in {{ countdown }} secondes...</p>
+       </div>
+       <div>
+          <button type="submit" class="btn btn-primary" [disabled]=" isFormValid">Ajouter utilisateur</button>
+       </div>
+      
+       </form>
+   </div>
+  
+ </ng-template>
+ 
+ 

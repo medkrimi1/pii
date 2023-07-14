@@ -1,0 +1,212 @@
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Les packs du dossier sponsoring {{selectedSponsoring.titre}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th colspan="2">Description du dossier</th>
+        <td colspan="2">{{ selectedSponsoring.description }}</td>
+      </tr>
+      <tr>
+        <th colspan="2">Le public cible</th>
+        <td colspan="2">{{ selectedSponsoring.publicCible }}</td>
+      </tr>
+      <tr>
+        <th colspan="2">Le plan de Visibilité</th>
+        <td colspan="2">{{ selectedSponsoring.planVisibilite }}</td>
+      </tr>
+      <tr>
+        <th colspan="2">Option de Partenariat</th>
+        <td colspan="2">{{ selectedSponsoring.optionsPartenariat }}</td>
+      </tr>
+      <tr>
+        <th colspan="2">Contact et Coordonnées</th>
+        <td colspan="2">{{ selectedSponsoring.contactCoordonnees }}</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td colspan="4" class="pack-header bg-light">Les packs disponibles</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <!-- Utilisez une boucle *ngFor pour afficher chaque pack -->
+          <div *ngFor="let pack of selectedSponsoring.pack_list" class="pack-item">
+            <div class="pack-description">
+              <strong>Description:</strong> {{ pack.descritpion }}
+            </div>
+            <div>
+              <strong>Type de pack:</strong> {{ pack.typePack }}
+            </div>
+            <div>
+              <strong>ID du pack:</strong> {{ pack.idPack }}
+            </div>
+            <br>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="closeAndOpenModal2(modal2)">Modifier le dossier</button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="modal.close()">Fermer</button>
+  </div>
+</ng-template>
+
+<ng-template #modal2 let-modal2>
+
+  <div class="modal-header">
+    <h4 class="modal-title">Les packs du dossier sponsoring {{selectedSponsoring.titre}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal2.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="validationForm">
+
+      <div class="mb-3">
+        <label for="titre" class="form-label">Titre du dossier</label>
+        <textarea class="form-control" id="titre" name="titre" formControlName="titre" autocomplete="off" placeholder="Titre" required></textarea>
+
+      </div>
+
+      <div class="mb-3">
+        <label for="descriptionDossier" class="form-label">Description du dossier</label>
+        <textarea class="form-control" id="descriptionDossier" name="description" formControlName="description" autocomplete="off" placeholder="Description" required></textarea>
+
+      </div>
+
+
+      <div class="mb-3">
+        <label for="publicCible" class="form-label">Le public cible</label>
+        <input type="text" class="form-control" id="publicCible" name="publicCible" formControlName="publicCible" autocomplete="off" placeholder="Public cible" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="planVisibilite" class="form-label">Le plan de visibilité</label>
+        <textarea class="form-control" id="planVisibilite" name="planVisibilite" formControlName="planVisibilite" autocomplete="off" placeholder="Plan de visibilité" required></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="optionsPartenariat" class="form-label">Option de partenariat</label>
+        <textarea class="form-control" id="optionsPartenariat" name="optionsPartenariat" formControlName="optionsPartenariat" autocomplete="off" placeholder="Option de partenariat" required></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="contactCoordonnees" class="form-label">Contact et coordonnées</label>
+        <input type="text" class="form-control" id="contactCoordonnees" name="contactCoordonnees" formControlName="contactCoordonnees" autocomplete="off" placeholder="Contact et coordonnées" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="eventSelect" class="form-label">Sélectionner un événement</label>
+        <select class="form-select" id="eventSelect" name="eventId" formControlName="eventId" [ngClass]="{'is-invalid': isFormSubmitted && validationForm.get('eventId')?.errors}" required>
+          <option value="">Sélectionner un événement</option>
+          <option *ngFor="let event of events" [value]="event.idEvent">{{ event.nom }}</option>
+        </select>
+      </div>
+
+
+      <ng-container formArrayName="packs" *ngFor="let packSection of packsGetter.controls; let i = index" class="mb-3">
+        <ng-container [formGroupName]="i">
+          <label>Pack numéro {{ i + 1 }}</label>
+          <div class="row">
+            <div class="col-md-6">
+              <input type="text" class="form-control" formControlName="descritpion" placeholder="Description" required>
+            </div>
+            <div class="col-md-4">
+              <select class="form-control" formControlName="typePack" required>
+                <option value="">Sélectionner un type de pack</option>
+                <option *ngFor="let typePackOption of typePackOptions" [value]="typePackOption">{{ typePackOption }}</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-danger" (click)="removePackField(i)">Supprimer</button>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+
+
+      <div>
+        <button type="button" class="btn btn-success mt-3"  (click)="addPacksField()">Ajouter un pack</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="modifyFolder(validationForm.value)" >Modifier le dossier</button>
+  </div>
+
+</ng-template>
+
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="../dashboard">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Dossiers sponsoring</li>
+  </ol>
+</nav>
+
+
+
+
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Dossiers</h6>
+        <div class="table-responsive " >
+          <table   class="table-hover table border-dark" style="width: 100%;">
+            <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nom dossier</th>
+              <th>Nom Evenement</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr *ngFor="let sponsoring of DossierSponsorings">
+              <td>{{ sponsoring.idDossier }}</td>
+              <td>
+                <a (click)="selectItem(sponsoring, content)" class="cursor-pointer ">
+                  {{sponsoring.titre}}
+                </a>
+              </td>
+              <td>
+
+                <a *ngIf="sponsoring?.evenement?.idEvent" target="_blank" href="../../../event/{{sponsoring.evenement.idEvent}}">
+                  {{ sponsoring.evenement.nom }}</a>
+
+                <p *ngIf="!sponsoring?.evenement?.idEvent">
+                  pas encore associer à un événement</p>
+              </td>
+
+
+            </tr>
+
+            </tbody>
+        
+          </table>
+
+       
+
+        </div>
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
